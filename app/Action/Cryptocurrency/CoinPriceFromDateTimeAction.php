@@ -9,11 +9,8 @@ use Illuminate\Support\Facades\Cache;
 
 class CoinPriceFromDateTimeAction
 {
-    private readonly CoinGeckoClient $coinGeckoClient;
-
-    public function __construct(private CoinPriceRepositoryInterface $coinPriceRepository)
+    public function __construct(private readonly CoinGeckoClient $coinGeckoClient, private readonly CoinPriceRepositoryInterface $coinPriceRepository)
     {
-        $this->coinGeckoClient = new CoinGeckoClient();
     }
 
     public function handle(string $coinName, string $dateTime): array

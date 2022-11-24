@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/cryptocurrency/price/current', CoinCurrentPriceController::class);
-Route::get('/cryptocurrency/price/history', CoinPriceFromDateTime::class);
+Route::prefix('/cryptocurrency/price')->name('cryptocurrency.price.')->group(function () {
+    Route::get('/current', CoinCurrentPriceController::class)->name('current');
+    Route::get('/history', CoinPriceFromDateTime::class)->name('history');
+});
