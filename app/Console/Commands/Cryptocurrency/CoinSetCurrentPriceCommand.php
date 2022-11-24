@@ -5,7 +5,7 @@ namespace App\Console\Commands\Cryptocurrency;
 use App\Action\Cryptocurrency\CoinSetPriceAction;
 use Illuminate\Console\Command;
 
-class CoinCurrentPriceCommand extends Command
+class CoinSetCurrentPriceCommand extends Command
 {
     public function __construct(private readonly CoinSetPriceAction $coinSetPriceAction)
     {
@@ -17,14 +17,14 @@ class CoinCurrentPriceCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cryptocurrency:coin-current-price';
+    protected $signature = 'cryptocurrency:set-coin-current-price';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Get coin current price';
+    protected $description = 'Set coin current price';
 
     /**
      * Execute the console command.

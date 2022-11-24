@@ -16,7 +16,6 @@ class CoinCurrentPriceAction
     {
         return Cache::remember("coin-{$coinName}-current-price", config('cache.time.five_minutes'), function () use ($coinName) {
             $data = collect($this->coinGeckoClient->simple()->getPrice($coinName, 'usd'))->flatten()->toArray();
-            dd($data);
             if (empty($data)) {
                 throw new Exception("No price found for currency {$coinName}");
             }
