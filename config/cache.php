@@ -107,4 +107,16 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Key Time
+    |--------------------------------------------------------------------------
+    |
+    | All keys containing cache times
+    |
+    */
+    'time' => [
+        'five_minutes' => 300,
+        'onde_day' => 86400,
+    ],
 ];

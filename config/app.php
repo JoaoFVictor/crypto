@@ -195,6 +195,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Cryptocurrency Service Providers...
+         */
+        App\Providers\Cryptocurrency\CoinPriceRepositoryProvider::class,
     ],
 
     /*
