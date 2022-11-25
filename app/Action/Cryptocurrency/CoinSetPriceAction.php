@@ -6,6 +6,7 @@ use App\Enums\Cryptocurrency\EnumCoin;
 use App\Repository\Cryptocurrency\CoinPriceRepositoryInterface;
 use Codenixsv\CoinGeckoApi\CoinGeckoClient;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 
 class CoinSetPriceAction
 {
@@ -22,6 +23,7 @@ class CoinSetPriceAction
         }
 
         foreach ($coinsPrice as $key => $value) {
+            Cache::put("coin-{$key}-current-price", ['coin' => $key, 'price' => current($value)], config('cache.time.five_minutes'));
             $data = ['name' => $key, 'price' => current($value), 'price_at' => now()];
             $this->coinPriceRepository->store($data);
         }
