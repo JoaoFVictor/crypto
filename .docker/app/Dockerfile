@@ -15,17 +15,13 @@ RUN apt-get update && \
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl bcmath sockets
 
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php composer-setup.php && \
-    php -r "unlink('composer-setup.php');" && \
-    mv composer.phar /usr/local/bin/composer
-
-RUN chown -R www-data:www-data /var/www
-USER www-data
+RUN chown www-data:root /var/www
 
 EXPOSE 9000
 
