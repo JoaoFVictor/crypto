@@ -3,10 +3,9 @@
 namespace Tests\Unit\Action\Cryptocurrency;
 
 use App\Action\Cryptocurrency\CoinSetPriceAction;
+use App\Adapter\CoinGecko\CoinGeckoApi;
 use App\Enums\Cryptocurrency\EnumCoin;
 use App\Repository\Cryptocurrency\CoinPriceRepositoryEloquent;
-use Codenixsv\CoinGeckoApi\Api\Simple;
-use Codenixsv\CoinGeckoApi\CoinGeckoClient;
 use Exception;
 use Tests\TestCase;
 
@@ -17,7 +16,7 @@ class CoinSetPriceActionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->coinsName = implode(',', array_column(EnumCoin::cases(), 'value'));
+        $this->coinsName = array_column(EnumCoin::cases(), 'value');
     }
 
     /**
@@ -30,13 +29,9 @@ class CoinSetPriceActionTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectDeprecationMessage("No price found for currency coins");
 
-        $simpleStub = $this->createMock(Simple::class);
-        $simpleStub->method('getPrice')
-            ->with($this->coinsName, 'usd')
+        $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
+        $coinGeckoClientStub->method('getCoinCurrentPrice')
             ->willReturn([]);
-        $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
-        $coinGeckoClientStub->method('simple')
-            ->willReturn($simpleStub);
         $coinPriceRepositoryEloquentStub = $this->createMock(CoinPriceRepositoryEloquent::class);
 
         $action = new CoinSetPriceAction($coinGeckoClientStub, $coinPriceRepositoryEloquentStub);
@@ -50,13 +45,10 @@ class CoinSetPriceActionTest extends TestCase
      */
     public function test_expect_insert_prices_in_db()
     {
-        $simpleStub = $this->createMock(Simple::class);
-        $simpleStub->method('getPrice')
-            ->with($this->coinsName, 'usd')
+        $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
+        $coinGeckoClientStub->method('getCoinCurrentPrice')
+            ->with($this->coinsName)
             ->willReturn(['bitcoin' => ['usd' => 16577], 'cosmos' => ['usd' => 10]]);
-        $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
-        $coinGeckoClientStub->method('simple')
-            ->willReturn($simpleStub);
         $coinPriceRepositoryEloquentStub = $this->createMock(CoinPriceRepositoryEloquent::class);
         $coinPriceRepositoryEloquentStub->expects(self::exactly(2))
             ->method('store');

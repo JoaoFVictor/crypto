@@ -3,6 +3,7 @@
 namespace Tests\Unit\Action\Cryptocurrency;
 
 use App\Action\Cryptocurrency\CoinPriceFromDateTimeAction;
+use App\Adapter\CoinGecko\CoinGeckoApi;
 use App\Models\Cryptocurrency\CoinPrice;
 use App\Repository\Cryptocurrency\CoinPriceRepositoryEloquent;
 use Closure;
@@ -25,13 +26,9 @@ class CoinPriceFromDateTimeActionTest extends TestCase
         $dateTime = '2022-11-24 00:50';
         $this->expectException(Exception::class);
 
-        $coinsStub = $this->createMock(Coins::class);
-        $coinsStub->method('getHistory')
-            ->with($coinName, '24-11-2022')
+        $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
+        $coinGeckoClientStub->method('getCoinCurrentPriceHistory')
             ->willThrowException(new Exception());
-        $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
-        $coinGeckoClientStub->method('coins')
-            ->willReturn($coinsStub);
         $coinPriceRepositoryEloquentStub = $this->createMock(CoinPriceRepositoryEloquent::class);
         $coinPriceRepositoryEloquentStub->method('findByDateTimeAndCoinName')
             ->willReturn(null);
@@ -55,9 +52,8 @@ class CoinPriceFromDateTimeActionTest extends TestCase
             ->with("coin-{$coinName}-date-{$dateTime}-price", 86400, Closure::class)
             ->andReturn(['coin' => $coinName, 'price' => $coinPrice]);
 
-        $coinsStub = $this->createMock(Coins::class);
-        $coinsStub->method('getHistory')
-            ->with($coinName, '24-11-2022')
+        $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
+        $coinGeckoClientStub->method('getCoinCurrentPriceHistory')
             ->willReturn([
                 'market_data' => [
                     'current_price' => [
@@ -65,9 +61,6 @@ class CoinPriceFromDateTimeActionTest extends TestCase
                         ]
                     ]
                 ]);
-        $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
-        $coinGeckoClientStub->method('coins')
-            ->willReturn($coinsStub);
         $coinPriceRepositoryEloquentStub = $this->createMock(CoinPriceRepositoryEloquent::class);
         $coinPriceRepositoryEloquentStub->method('findByDateTimeAndCoinName')
             ->willReturn(null);
@@ -95,7 +88,7 @@ class CoinPriceFromDateTimeActionTest extends TestCase
             ->with("coin-{$coinName}-date-{$dateTime}-price", 86400, Closure::class)
             ->andReturn(['coin' => $coinName, 'price' => $coinPrice]);
 
-        $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
+        $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
         $coinPriceRepositoryEloquentStub = $this->createMock(CoinPriceRepositoryEloquent::class);
         $coinPriceRepositoryEloquentStub->method('findByDateTimeAndCoinName')
             ->willReturn(CoinPrice::factory()->make());

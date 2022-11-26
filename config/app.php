@@ -197,9 +197,14 @@ return [
         App\Providers\CoinGeckoClientProvider::class,
 
         /*
-         * Cryptocurrency Service Providers...
+         * Cryptocurrency Repository Providers...
          */
         App\Providers\Cryptocurrency\CoinPriceRepositoryProvider::class,
+
+        /*
+         * Cryptocurrency Adapter Providers...
+         */
+        App\Providers\Adapter\CoinGecko\CoinGeckoProvider::class,
     ],
 
     /*

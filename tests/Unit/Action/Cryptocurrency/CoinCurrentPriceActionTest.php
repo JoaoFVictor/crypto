@@ -3,9 +3,8 @@
 namespace Tests\Unit\Action\Cryptocurrency;
 
 use App\Action\Cryptocurrency\CoinCurrentPriceAction;
+use App\Adapter\CoinGecko\CoinGeckoApi;
 use Closure;
-use Codenixsv\CoinGeckoApi\Api\Simple;
-use Codenixsv\CoinGeckoApi\CoinGeckoClient;
 use Exception;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
@@ -23,13 +22,9 @@ class CoinCurrentPriceActionTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectDeprecationMessage("No price found for currency {$coinName}");
 
-        $simpleStub = $this->createMock(Simple::class);
-        $simpleStub->method('getPrice')
-            ->with($coinName, 'usd')
+        $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
+        $coinGeckoClientStub->method('getCoinCurrentPrice')
             ->willReturn([]);
-        $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
-        $coinGeckoClientStub->method('simple')
-            ->willReturn($simpleStub);
 
         $action = new CoinCurrentPriceAction($coinGeckoClientStub);
         $action->handle($coinName);
@@ -49,13 +44,9 @@ class CoinCurrentPriceActionTest extends TestCase
             ->with("coin-{$coinName}-current-price", 300, Closure::class)
             ->andReturn(['coin' => $coinName, 'price' => $coinPrice]);
 
-        $simpleStub = $this->createMock(Simple::class);
-        $simpleStub->method('getPrice')
-            ->with($coinName, 'usd')
-            ->willReturn([$coinPrice]);
-        $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
-        $coinGeckoClientStub->method('simple')
-            ->willReturn($simpleStub);
+        $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
+        $coinGeckoClientStub->method('getCoinCurrentPrice')
+            ->willReturn(['coinTest' => ['usd' => $coinPrice]]);
 
         $action = new CoinCurrentPriceAction($coinGeckoClientStub);
         $response = $action->handle($coinName);
