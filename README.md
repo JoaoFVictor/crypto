@@ -125,12 +125,7 @@ The project has two endpoints, one to obtain the current price of a cryptocurren
 docker-compose up -d
 ```
 
-2. Enter the application container
+2. Execute the schedules:
 ```
-docker exec -it app bash
-```
-
-3. Execute the schedules
-```
-php artisan schedule:work
+docker exec app php artisan schedule:work
 ```
