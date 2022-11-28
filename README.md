@@ -109,7 +109,7 @@ docker exec app php artisan migrate
 ## 🛳️ Containers
 For the full operation of the project, four containers were created: the app, nginx, postgres and redis
 - app: It is the container with responsible for running the application using php 8.1 and laravel 9
-- nginx: It is the container with the redis image responsible for the cache for the project
+- nginx: It is the container with the redis image responsible for the http server
 - postgres: It is the container with the postgres database image
 - redis: It is the container with the redis image responsible for the cache for the project
 
