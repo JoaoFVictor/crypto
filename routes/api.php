@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Cryptocurrency\CoinCurrentPriceController;
-use App\Http\Controllers\Cryptocurrency\CoinPriceFromDateTime;
+use App\Http\Controllers\Cryptocurrency\CoinPriceFromDateTimeController;
+use App\Http\Controllers\Cryptocurrency\ValidCryptocurrencyNameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::prefix('/cryptocurrency/price')->name('cryptocurrency.price.')->group(function () {
-    Route::get('/current', CoinCurrentPriceController::class)->name('current');
-    Route::get('/history', CoinPriceFromDateTime::class)->name('history');
+Route::prefix('/cryptocurrency')->name('cryptocurrency.')->group(function () {
+    Route::get('/names', ValidCryptocurrencyNameController::class)->name('names');
+    Route::prefix('/price')->name('price.')->group(function () {
+        Route::get('/current', CoinCurrentPriceController::class)->name('current');
+        Route::get('/history', CoinPriceFromDateTimeController::class)->name('history');
+    });
 });

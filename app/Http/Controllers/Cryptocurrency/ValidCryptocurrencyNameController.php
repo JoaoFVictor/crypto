@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Cryptocurrency;
 
-use App\Action\Cryptocurrency\CoinCurrentPriceAction;
+use App\Enums\Cryptocurrency\EnumCoin;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Cryptocurrency\CoinCurrentPriceRequest;
-use App\Http\Resources\Cryptocurrency\CoinPriceResource;
+use App\Http\Resources\Cryptocurrency\ValidCryptocurrencyNameResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,18 +12,14 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
-class CoinCurrentPriceController extends Controller
+class ValidCryptocurrencyNameController extends Controller
 {
-    public function __construct(private readonly CoinCurrentPriceAction $coinCurrentPriceAction)
-    {
-    }
-
-    public function __invoke(CoinCurrentPriceRequest $request): JsonResource|JsonResponse
+    public function __invoke(): JsonResource|JsonResponse
     {
         try {
-            $coinCurrentPrice = $this->coinCurrentPriceAction->handle($request->input('coin'));
+            $validCrypyocurrencyName = EnumCoin::cases();
 
-            return CoinPriceResource::make($coinCurrentPrice);
+            return ValidCryptocurrencyNameResource::collection($validCrypyocurrencyName);
         } catch (Exception $ex) {
             Log::critical('Controller'.self::class, ['exception' => $ex->getMessage()]);
 

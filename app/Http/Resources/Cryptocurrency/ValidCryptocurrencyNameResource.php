@@ -4,7 +4,7 @@ namespace App\Http\Resources\Cryptocurrency;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CoinCurrentPriceResource extends JsonResource
+class ValidCryptocurrencyNameResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,7 @@ class CoinCurrentPriceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'coin' => $this['coin'],
-            'price' => $this['price'],
+            'coin' => $this->value,
         ];
     }
 }
