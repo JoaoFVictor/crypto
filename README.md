@@ -101,6 +101,11 @@ docker exec app composer install
 docker exec app php artisan key:generate
 ```
 
+7. Run db migrations:
+```
+docker exec app php artisan migrate
+```
+
 ## 🛳️ Containers
 For the full operation of the project, four containers were created: the app, nginx, postgres and redis
 - app: It is the container with responsible for running the application using php 8.1 and laravel 9
@@ -115,12 +120,17 @@ The project has two endpoints, one to obtain the current price of a cryptocurren
 
 ## 🚀 Running
 
-1. Enter the application container
+1. Start application containers:
+```
+docker-compose up -d
+```
+
+2. Enter the application container
 ```
 docker exec -it app bash
 ```
 
-2. Execute the schedules
+3. Execute the schedules
 ```
 php artisan schedule:work
 ```
