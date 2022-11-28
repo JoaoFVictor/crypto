@@ -28,14 +28,16 @@ app
 │   │   ├── ...
 │   │   └── Cryptocurrency
 │   │       ├── CoinCurrentPriceController.php
-│   │       └── CoinCurrentPriceController.php
+│   │       ├── CoinPriceFromDateTimeController.php
+│   │       └── ValidCryptocurrencyNameController.php.php
 │   ├── Requests
 │   │   └── Cryptocurrency
 │   │       ├── CoinCurrentPriceRequest.php
 │   │       └── CoinPriceFromDateTimeRequest.php
 │   ├── Resources
 │   │   └── Cryptocurrency
-│   │       └── CoinCurrentPriceResource.php
+│   │       ├── CoinPriceResource.php
+│   │       └── ValidCryptocurrencyNameResource.php
 │   └── ...
 ├── Models
 │   ├── Cryptocurrency
@@ -114,9 +116,10 @@ For the full operation of the project, four containers were created: the app, ng
 - redis: It is the container with the redis image responsible for the cache for the project
 
 ## ✨ Endpoints
-The project has two endpoints, one to obtain the current price of a cryptocurrency and the other to obtain the price of a cryptocurrency on a given date.
-- cryptocurrency/price: This endpoint is responsible for querying the current price of a cryptocurrency. Has as query string the `coin`
-- cryptocurrency/history: This endpoint is responsible for querying the price of a cryptocurrency on a given date. It has as query string the `coin` and `date`
+The project has three endpoints, one to obtain the current price of a cryptocurrency, other to obtain the price of a cryptocurrency on a given date and finally one to inform which cryptocurrencies are valid in queries.
+- cryptocurrency/price/current: This endpoint is responsible for querying the current price of a cryptocurrency. Has as query string the `coin`
+- cryptocurrency/price/history: This endpoint is responsible for querying the price of a cryptocurrency on a given date. It has as query string the `coin` and `date`
+- cryptocurrency/names: This endpoint is responsible for informing which cryptocurrencies are accepted as a parameter in the other endpoints`
 
 ## 🚀 Running
 
@@ -128,4 +131,10 @@ docker-compose up -d
 2. Execute the schedules:
 ```
 docker exec app php artisan schedule:work
+```
+
+## 📄 Tests
+To run the unit and feature tests run:
+```
+docker exec app php artisan test
 ```
