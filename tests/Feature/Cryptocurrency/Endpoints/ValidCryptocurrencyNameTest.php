@@ -33,7 +33,7 @@ class ValidCryptocurrencyNameTest extends TestCase
                     [
                         'coin' => 'cosmos',
                     ],
-                ]
+                ],
             ], true);
     }
 }

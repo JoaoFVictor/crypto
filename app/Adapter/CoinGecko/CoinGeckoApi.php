@@ -14,12 +14,14 @@ class CoinGeckoApi implements CoinGeckoInterface
     public function getCoinCurrentPrice(array $coinsName): array
     {
         $coinsNameString = implode(',', $coinsName);
+
         return $this->coinGeckoClient->simple()->getPrice($coinsNameString, 'usd');
     }
 
     public function getCoinCurrentPriceHistory(string $coinName, Carbon $date): array
     {
         $dateFormated = $date->format('d-m-Y');
+
         return $this->coinGeckoClient->coins()->getHistory($coinName, $dateFormated);
     }
 }

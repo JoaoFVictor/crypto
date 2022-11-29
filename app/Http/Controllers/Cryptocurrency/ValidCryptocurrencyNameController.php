@@ -8,8 +8,8 @@ use App\Http\Resources\Cryptocurrency\ValidCryptocurrencyNameResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class ValidCryptocurrencyNameController extends Controller

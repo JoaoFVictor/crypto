@@ -19,7 +19,7 @@ class CoinSetCurrentPriceCommandTest extends TestCase
     public function test_should_be_exception_if_dont_receive_prices()
     {
         $this->expectException(Exception::class);
-        $this->expectDeprecationMessage("No price found for currency coins");
+        $this->expectDeprecationMessage('No price found for currency coins');
 
         $simpleStub = $this->createMock(Simple::class);
         $simpleStub->method('getPrice')

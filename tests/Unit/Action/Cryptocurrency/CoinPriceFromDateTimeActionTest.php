@@ -7,8 +7,6 @@ use App\Adapter\CoinGecko\CoinGeckoApi;
 use App\Models\Cryptocurrency\CoinPrice;
 use App\Repository\Cryptocurrency\CoinPriceRepositoryEloquent;
 use Closure;
-use Codenixsv\CoinGeckoApi\Api\Coins;
-use Codenixsv\CoinGeckoApi\CoinGeckoClient;
 use Exception;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
@@ -57,10 +55,10 @@ class CoinPriceFromDateTimeActionTest extends TestCase
             ->willReturn([
                 'market_data' => [
                     'current_price' => [
-                        'usd' => $coinPrice
-                        ]
-                    ]
-                ]);
+                        'usd' => $coinPrice,
+                    ],
+                ],
+            ]);
         $coinPriceRepositoryEloquentStub = $this->createMock(CoinPriceRepositoryEloquent::class);
         $coinPriceRepositoryEloquentStub->method('findByDateTimeAndCoinName')
             ->willReturn(null);

@@ -3,7 +3,6 @@
 use App\Http\Controllers\Cryptocurrency\CoinCurrentPriceController;
 use App\Http\Controllers\Cryptocurrency\CoinPriceFromDateTimeController;
 use App\Http\Controllers\Cryptocurrency\ValidCryptocurrencyNameController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -27,7 +27,7 @@ class CoinSetPriceActionTest extends TestCase
     public function test_should_be_exception_if_dont_receive_price()
     {
         $this->expectException(Exception::class);
-        $this->expectDeprecationMessage("No price found for currency coins");
+        $this->expectDeprecationMessage('No price found for currency coins');
 
         $coinGeckoClientStub = $this->createMock(CoinGeckoApi::class);
         $coinGeckoClientStub->method('getCoinCurrentPrice')

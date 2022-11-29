@@ -31,7 +31,7 @@ class CoinPriceFromDateTimeTest extends TestCase
                 'errors' => [
                     'coin' => ['The coin field is required.'],
                     'date' => ['The date field is required.'],
-                ]
+                ],
             ], true);
     }
 
@@ -52,7 +52,7 @@ class CoinPriceFromDateTimeTest extends TestCase
                 'errors' => [
                     'coin' => ['The selected coin is invalid.'],
                     'date' => ['The date does not match the format Y-m-d H:i.'],
-                ]
+                ],
             ], true);
     }
 
@@ -71,10 +71,10 @@ class CoinPriceFromDateTimeTest extends TestCase
             ->willReturn([
                 'market_data' => [
                     'current_price' => [
-                        'usd' => $coinPrice
-                        ]
-                    ]
-                ]);
+                        'usd' => $coinPrice,
+                    ],
+                ],
+            ]);
         $coinGeckoClientStub = $this->createMock(CoinGeckoClient::class);
         $coinGeckoClientStub->method('coins')
             ->willReturn($coinsStub);
@@ -87,7 +87,7 @@ class CoinPriceFromDateTimeTest extends TestCase
                 'data' => [
                     'coin' => EnumCoin::Bitcoin->value,
                     'price' => $coinPrice,
-                ]
+                ],
             ], true);
         $this->assertDatabaseHas('coin_prices', [
             'name' => 'bitcoin',
@@ -118,7 +118,7 @@ class CoinPriceFromDateTimeTest extends TestCase
                 'data' => [
                     'coin' => EnumCoin::Bitcoin->value,
                     'price' => $coinPrice,
-                ]
+                ],
             ], true);
     }
 }

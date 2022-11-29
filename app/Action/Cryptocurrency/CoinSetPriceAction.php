@@ -19,7 +19,7 @@ class CoinSetPriceAction
         $coinsName = array_column(EnumCoin::cases(), 'value');
         $coinsPrice = $this->coinGeckoClient->getCoinCurrentPrice($coinsName);
         if (empty($coinsPrice)) {
-            throw new Exception("No price found for currency coins");
+            throw new Exception('No price found for currency coins');
         }
 
         foreach ($coinsPrice as $key => $value) {

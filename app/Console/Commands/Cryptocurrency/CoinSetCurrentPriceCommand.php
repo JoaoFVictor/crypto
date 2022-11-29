@@ -34,6 +34,7 @@ class CoinSetCurrentPriceCommand extends Command
     public function handle(): int
     {
         $this->coinSetPriceAction->handle();
+
         return Command::SUCCESS;
     }
 }

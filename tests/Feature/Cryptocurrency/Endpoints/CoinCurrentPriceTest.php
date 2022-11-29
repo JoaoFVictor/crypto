@@ -27,7 +27,7 @@ class CoinCurrentPriceTest extends TestCase
             ])->assertJson([
                 'errors' => [
                     'coin' => ['The coin field is required.'],
-                ]
+                ],
             ], true);
     }
 
@@ -46,7 +46,7 @@ class CoinCurrentPriceTest extends TestCase
             ])->assertJson([
                 'errors' => [
                     'coin' => ['The selected coin is invalid.'],
-                ]
+                ],
             ], true);
     }
 
@@ -74,7 +74,7 @@ class CoinCurrentPriceTest extends TestCase
                 'data' => [
                     'coin' => EnumCoin::Bitcoin->value,
                     'price' => $coinPrice,
-                ]
+                ],
             ], true);
     }
 }
